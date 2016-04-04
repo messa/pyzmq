@@ -172,6 +172,13 @@ class ThreadAuthenticator(object):
             self.pipe.close()
             self.pipe = None
 
+    def __enter__(self):
+        self.start()
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.stop()
+
     def is_alive(self):
         """Is the ZAP thread currently running?"""
         if self.thread and self.thread.is_alive():
